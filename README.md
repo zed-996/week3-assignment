@@ -1,4 +1,4 @@
-# Customer Intelligence System — Country Segmentation
+# Customer Intelligence System - Country Segmentation
 
 ## Overview
 
@@ -13,52 +13,52 @@ https://www.kaggle.com/datasets/rohan0301/unsupervised-learning-on-country-data
 
 ## Files
 
-Customer_Intelligence_System.ipynb   — main notebook with full analysis
-country_clusters.csv                 — output file with cluster labels for all 167 countries
-data-dictionary.csv                  — feature descriptions from the dataset
-Country-data.csv                     — raw dataset
+Customer_Intelligence_System.ipynb   - main notebook with full analysis
+country_clusters.csv                 - output file with cluster labels for all 167 countries
+data-dictionary.csv                  - feature descriptions from the dataset
+Country-data.csv                     - raw dataset
 
 
 ## Features in the Dataset
 
-child_mort   — child mortality rate per 1000 births
-exports      — exports as % of GDP
-health       — health spending as % of GDP
-imports      — imports as % of GDP
-income       — net income per person (USD)
-inflation    — annual inflation rate (%)
-life_expec   — average life expectancy (years)
-total_fer    — total fertility rate (children per woman)
-gdpp         — GDP per capita (USD)
+child_mort   - child mortality rate per 1000 births
+exports      - exports as % of GDP
+health       - health spending as % of GDP
+imports      - imports as % of GDP
+income       - net income per person (USD)
+inflation    - annual inflation rate (%)
+life_expec   - average life expectancy (years)
+total_fer    - total fertility rate (children per woman)
+gdpp         - GDP per capita (USD)
 
 
 ## What Was Done
 
-**EDA** — checked distributions, correlation heatmap, boxplots for outliers.
+**EDA** - checked distributions, correlation heatmap, boxplots for outliers.
 Strong correlations found: child_mort vs life_expec (-0.89), child_mort vs
 total_fer (+0.85), income vs gdpp (+0.97).
 
-**Preprocessing** — StandardScaler applied to all numeric features before
+**Preprocessing** - StandardScaler applied to all numeric features before
 clustering. Features like gdpp (up to $105,000) would otherwise dominate
 distance calculations over features like health (1.8–17.9).
 
-**K-Means Clustering** — used Elbow method and Silhouette scores across
+**K-Means Clustering** - used Elbow method and Silhouette scores across
 k=2 to 10. Settled on k=3 because the elbow flattens after that and k=3
 produces a split that actually means something (Developed / Developing /
 Underdeveloped). Silhouette score: ~0.47.
 
-**DBSCAN** — run alongside K-Means with eps=1.5, min_samples=3. Found 139
+**DBSCAN** - run alongside K-Means with eps=1.5, min_samples=3. Found 139
 countries in the main cluster, 3 in a small secondary cluster, and 25 outliers.
 The outliers are either extreme poverty cases or oil-wealth anomalies.
 
-**PCA Visualization** — reduced to 2 components for plotting. The three
+**PCA Visualization** - reduced to 2 components for plotting. The three
 K-Means clusters separate cleanly. Notable countries labeled on the scatter plot.
 
-**Random Forest + XGBoost** — both trained on the K-Means labels to validate
+**Random Forest + XGBoost** - both trained on the K-Means labels to validate
 cluster quality and rank feature importance. High accuracy (~95%) means the
 clusters are well-separated, not that the models predict anything new.
 
-**Feature Importance** — both models agree: child_mort is the most important
+**Feature Importance** - both models agree: child_mort is the most important
 feature by a clear margin, followed by life_expec, gdpp, and income.
 
 
@@ -82,11 +82,11 @@ The child mortality gap between Developed and Underdeveloped is 18x.
 
 Ranked by child mortality within the Underdeveloped cluster:
 
-1. Haiti              — 208/1000, life expectancy 32 years
-2. Sierra Leone       — 160/1000
-3. Chad               — 150/1000
-4. Central African Republic — 149/1000
-5. Mali               — 137/1000
+1. Haiti              - 208/1000, life expectancy 32 years
+2. Sierra Leone       - 160/1000
+3. Chad               - 150/1000
+4. Central African Republic - 149/1000
+5. Mali               - 137/1000
 
 Haiti is a significant outlier even within the worst cluster. DBSCAN flags it
 separately from the rest.
